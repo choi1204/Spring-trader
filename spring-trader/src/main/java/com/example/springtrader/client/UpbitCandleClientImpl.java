@@ -3,9 +3,10 @@ package com.example.springtrader.client;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.springtrader.config.properties.UpbitProperties;
+import com.example.springtrader.domain.dto.MinuteCandleDto;
+import com.example.springtrader.domain.entity.MinuteCandle;
 import com.example.springtrader.domain.enums.MarketType;
 import com.trader.common.enums.MinuteType;
-import com.trader.common.utils.MinuteCandle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.ParameterizedTypeReference;
@@ -34,14 +35,14 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
     private final UpbitProperties upbitProperties;
 
     @Override
-    public List<MinuteCandle> getMinuteCandles(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
+    public List<MinuteCandleDto> getMinuteCandlesDto(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
 
         HttpHeaders authorizationHeader = getAuthorizationHeader(getJwtToken());
         HttpEntity<String> httpEntity = new HttpEntity<>(authorizationHeader);
 
         URI targetUrl = getMinuteCandlesUrl(minuteType, marketType, count, localDateTime);
 
-        ResponseEntity<List<MinuteCandle>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
+        ResponseEntity<List<MinuteCandleDto>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
         return result.getBody();
     }
 

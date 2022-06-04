@@ -2,9 +2,9 @@ package com.example.springtrader.client;
 
 import com.example.springtrader.config.YamlLoadFactory;
 import com.example.springtrader.config.properties.UpbitProperties;
-import com.example.springtrader.enums.MarketType;
+import com.example.springtrader.domain.dto.MinuteCandleDto;
+import com.example.springtrader.domain.enums.MarketType;
 import com.trader.common.enums.MinuteType;
-import com.trader.common.utils.MinuteCandle;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,8 +34,8 @@ class UpbitCandleClientImplTest {
     @Test
     @DisplayName("upbit 사이트에서 캔들을 조회할 수 있다.")
     void _1() {
-        List<MinuteCandle> minuteCandles = upbitCandleClient.getMinuteCandles(MinuteType.FIVE, MarketType.KRW_BTC, 200, LocalDateTime.now());
-        assertThat(minuteCandles.size()).isEqualTo(200);
+        List<MinuteCandleDto> minuteCandleDtoList = upbitCandleClient.getMinuteCandlesDto(MinuteType.FIVE, MarketType.KRW_BTC, 200, LocalDateTime.now());
+        assertThat(minuteCandleDtoList.size()).isEqualTo(200);
     }
 
 }
