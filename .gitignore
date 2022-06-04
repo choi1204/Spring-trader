@@ -23,7 +23,7 @@
 hs_err_pid*
 
 maven-wrapper.*
-*.xml
+.idea/
 *.iml
 maven-wrapper.jar
 application-upbit.yaml
