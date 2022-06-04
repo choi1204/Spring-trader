@@ -56,28 +56,8 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
                 .buildAndExpand(minuteType.getMinute())
                 .toUri();
 
-        ResponseEntity<List<MinuteCandle>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<MinuteCandle>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
-            }
-
-            @Override
-            public boolean equals(Object other) {
-                return super.equals(other);
-            }
-
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-
-            @Override
-            public String toString() {
-                return super.toString();
-            }
-        });
-        return null;
+        ResponseEntity<List<MinuteCandle>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
+        return result.getBody();
     }
 
     private String getJwtToken() {
