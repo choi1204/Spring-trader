@@ -18,7 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @PropertySource(
         value = {"classpath:application.yaml"},
-        factory = YamlLoadFactory.class)
+        factory = YamlLoadFactory.class
+)
 class SpringTraderApplicationTests {
 
     @Autowired
