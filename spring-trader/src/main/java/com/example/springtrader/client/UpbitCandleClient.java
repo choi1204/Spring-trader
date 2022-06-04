@@ -1,7 +1,6 @@
 package com.example.springtrader.client;
 
-import com.trader.common.enums.MarketFlowType;
-import com.trader.common.enums.MarketUnit;
+import com.example.springtrader.enums.MarketType;
 import com.trader.common.enums.MinuteType;
 import com.trader.common.utils.MinuteCandle;
 
@@ -10,5 +9,5 @@ import java.util.List;
 
 public interface UpbitCandleClient {
 
-    List<MinuteCandle> getMinuteCandles(MinuteType minuteType, MarketUnit marketUnit, int count, LocalDateTime localDateTime);
+    List<MinuteCandle> getMinuteCandles(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime);
 }

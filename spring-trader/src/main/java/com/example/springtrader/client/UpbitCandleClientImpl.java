@@ -3,7 +3,7 @@ package com.example.springtrader.client;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.springtrader.config.properties.UpbitProperties;
-import com.trader.common.enums.MarketUnit;
+import com.example.springtrader.enums.MarketType;
 import com.trader.common.enums.MinuteType;
 import com.trader.common.utils.MinuteCandle;
 import lombok.RequiredArgsConstructor;
@@ -34,24 +34,27 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
     private final UpbitProperties upbitProperties;
 
     @Override
-    public List<MinuteCandle> getMinuteCandles(MinuteType minuteType, MarketUnit marketUnit, int count, LocalDateTime localDateTime) {
+    public List<MinuteCandle> getMinuteCandles(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
 
-        String jwtToken = getJwtToken();
-        HttpHeaders authorizationHeader = getAuthorizationHeader(jwtToken);
+        HttpHeaders authorizationHeader = getAuthorizationHeader(getJwtToken());
         HttpEntity<String> httpEntity = new HttpEntity<>(authorizationHeader);
 
-        URI targetUrl = UriComponentsBuilder
+        URI targetUrl = getMinuteCandlesUrl(minuteType, marketType, count, localDateTime);
+
+        ResponseEntity<List<MinuteCandle>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
+        return result.getBody();
+    }
+
+    private URI getMinuteCandlesUrl(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
+        return UriComponentsBuilder
                 .fromUriString(upbitProperties.getServerUrl())
                 .path("/v1/candles/minutes/{unit}")
-                .queryParam("market", marketUnit.getType() + "-" + MarketUnit.BTC.getType())
+                .queryParam("market", marketType.getType())
                 .queryParam("to", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(localDateTime))
                 .queryParam("count", count)
                 .encode(StandardCharsets.UTF_8)
                 .buildAndExpand(minuteType.getMinute())
                 .toUri();
-
-        ResponseEntity<List<MinuteCandle>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
-        return result.getBody();
     }
 
     private String getJwtToken() {
