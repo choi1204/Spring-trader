@@ -1,8 +1,8 @@
-package com.example.springtrader.Crawler.service;
+package com.example.springtrader.crawler.service;
 
-import com.example.springtrader.Crawler.domain.dto.MinuteCandleDto;
-import com.example.springtrader.Crawler.domain.entity.MinuteCandle;
-import com.example.springtrader.Crawler.repository.MinuteCandleRepository;
+import com.example.springtrader.crawler.domain.dto.MinuteCandleDto;
+import com.example.springtrader.crawler.domain.entity.MinuteCandle;
+import com.example.springtrader.crawler.repository.MinuteCandleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

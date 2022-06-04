@@ -1,6 +1,6 @@
-package com.example.springtrader.Crawler.domain.dto;
+package com.example.springtrader.crawler.domain.dto;
 
-import com.example.springtrader.Crawler.domain.entity.MinuteCandle;
+import com.example.springtrader.crawler.domain.entity.MinuteCandle;
 import com.example.springtrader.common.enums.MarketType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

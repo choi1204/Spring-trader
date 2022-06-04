@@ -1,4 +1,4 @@
-package com.example.springtrader.Crawler.domain.entity;
+package com.example.springtrader.crawler.domain.entity;
 
 import com.example.springtrader.common.enums.MarketType;
 import lombok.Getter;
