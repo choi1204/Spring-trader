@@ -1,4 +1,4 @@
-package com.example.springtrader.domain.enums;
+package com.example.springtrader.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

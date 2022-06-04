@@ -1,7 +1,6 @@
-package com.example.springtrader.domain.entity;
+package com.example.springtrader.Crawler.domain.entity;
 
-import com.example.springtrader.domain.enums.MarketType;
-import lombok.AllArgsConstructor;
+import com.example.springtrader.common.enums.MarketType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

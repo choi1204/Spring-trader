@@ -1,11 +1,11 @@
 package com.example.springtrader.client;
 
+import com.example.springtrader.common.client.UpbitCandleClient;
 import com.example.springtrader.config.YamlLoadFactory;
-import com.example.springtrader.config.properties.UpbitProperties;
-import com.example.springtrader.domain.dto.MinuteCandleDto;
-import com.example.springtrader.domain.entity.MinuteCandle;
-import com.example.springtrader.domain.enums.MarketType;
-import com.example.springtrader.service.MinuteCandleService;
+import com.example.springtrader.common.properties.UpbitProperties;
+import com.example.springtrader.Crawler.domain.dto.MinuteCandleDto;
+import com.example.springtrader.common.enums.MarketType;
+import com.example.springtrader.Crawler.service.MinuteCandleService;
 import com.trader.common.enums.MinuteType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;

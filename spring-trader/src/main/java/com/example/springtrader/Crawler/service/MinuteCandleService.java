@@ -1,6 +1,6 @@
-package com.example.springtrader.service;
+package com.example.springtrader.Crawler.service;
 
-import com.example.springtrader.domain.dto.MinuteCandleDto;
+import com.example.springtrader.Crawler.domain.dto.MinuteCandleDto;
 
 import java.util.List;
 

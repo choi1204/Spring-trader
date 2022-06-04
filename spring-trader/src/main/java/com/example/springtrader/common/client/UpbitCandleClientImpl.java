@@ -1,10 +1,10 @@
-package com.example.springtrader.client;
+package com.example.springtrader.common.client;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.springtrader.config.properties.UpbitProperties;
-import com.example.springtrader.domain.dto.MinuteCandleDto;
-import com.example.springtrader.domain.enums.MarketType;
+import com.example.springtrader.common.properties.UpbitProperties;
+import com.example.springtrader.Crawler.domain.dto.MinuteCandleDto;
+import com.example.springtrader.common.enums.MarketType;
 import com.trader.common.enums.MinuteType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

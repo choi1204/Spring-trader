@@ -1,6 +1,6 @@
-package com.example.springtrader.repository;
+package com.example.springtrader.Crawler.repository;
 
-import com.example.springtrader.domain.entity.MinuteCandle;
+import com.example.springtrader.Crawler.domain.entity.MinuteCandle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MinuteCandleRepository extends JpaRepository<MinuteCandle, Long> {

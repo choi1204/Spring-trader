@@ -1,4 +1,4 @@
-package com.example.springtrader.config.properties;
+package com.example.springtrader.common.properties;
 
 import lombok.Getter;
 import lombok.Setter;

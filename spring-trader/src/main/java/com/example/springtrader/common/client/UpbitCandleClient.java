@@ -1,9 +1,8 @@
-package com.example.springtrader.client;
+package com.example.springtrader.common.client;
 
-import com.example.springtrader.domain.dto.MinuteCandleDto;
-import com.example.springtrader.domain.enums.MarketType;
+import com.example.springtrader.Crawler.domain.dto.MinuteCandleDto;
+import com.example.springtrader.common.enums.MarketType;
 import com.trader.common.enums.MinuteType;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 import java.util.List;
