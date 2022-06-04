@@ -1,8 +1,8 @@
-package com.example.springtrader;
+package com.example.springtrader.client;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.trader.common.enums.MarketFlowType;
+import com.example.springtrader.config.properties.UpbitProperties;
 import com.trader.common.enums.MarketUnit;
 import com.trader.common.enums.MinuteType;
 import com.trader.common.utils.MinuteCandle;
@@ -15,19 +15,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.yaml.snakeyaml.error.Mark;
 
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service

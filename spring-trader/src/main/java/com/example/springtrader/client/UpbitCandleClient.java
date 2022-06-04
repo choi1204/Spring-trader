@@ -1,4 +1,4 @@
-package com.example.springtrader;
+package com.example.springtrader.client;
 
 import com.trader.common.enums.MarketFlowType;
 import com.trader.common.enums.MarketUnit;

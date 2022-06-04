@@ -1,5 +1,8 @@
 package com.example.springtrader;
 
+import com.example.springtrader.client.UpbitCandleClient;
+import com.example.springtrader.config.YamlLoadFactory;
+import com.example.springtrader.config.properties.UpbitProperties;
 import com.trader.common.enums.MarketUnit;
 import com.trader.common.enums.MinuteType;
 import com.trader.common.utils.MinuteCandle;
