@@ -64,10 +64,12 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
             currentTime = currentTime.minusMinutes(5 * MAX_REQUEST);
             threadSleep(SLEEP_TIME);
         }
+
         int between = (int)ChronoUnit.MINUTES.between(startTime, currentTime);
         if (between != 0 && between > 0) {
             minuteCandleDtoList.addAll(getMinuteCandlesDto(minuteType, marketType, between / 5, currentTime));
         }
+
         return minuteCandleDtoList;
     }
 
@@ -81,7 +83,6 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
         } else {
             return true;
         }
-
     }
 
     private void threadSleep(int mills) {
