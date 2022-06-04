@@ -3,7 +3,7 @@ package com.example.springtrader.client;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.springtrader.config.properties.UpbitProperties;
-import com.example.springtrader.enums.MarketType;
+import com.example.springtrader.domain.enums.MarketType;
 import com.trader.common.enums.MinuteType;
 import com.trader.common.utils.MinuteCandle;
 import lombok.RequiredArgsConstructor;

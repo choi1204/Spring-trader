@@ -1,6 +1,6 @@
 package com.example.springtrader.client;
 
-import com.example.springtrader.enums.MarketType;
+import com.example.springtrader.domain.enums.MarketType;
 import com.trader.common.enums.MinuteType;
 import com.trader.common.utils.MinuteCandle;
 
