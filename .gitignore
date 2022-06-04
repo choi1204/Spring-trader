@@ -30,5 +30,5 @@ application-upbit.yaml
 mvnw
 mvnw.*
 META-INF/
-
+target/
 
