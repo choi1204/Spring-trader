@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.springtrader.config.properties.UpbitProperties;
 import com.example.springtrader.domain.dto.MinuteCandleDto;
-import com.example.springtrader.domain.entity.MinuteCandle;
 import com.example.springtrader.domain.enums.MarketType;
 import com.trader.common.enums.MinuteType;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,8 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +35,13 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
 
     private final UpbitProperties upbitProperties;
 
+    private final int MAX_REQUEST = 200;
+
+    private final int FIVE_MIN = 5;
+
+    private final int SLEEP_TIME = 80;
+
+
     @Override
     public List<MinuteCandleDto> getMinuteCandlesDto(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
 
@@ -44,6 +52,44 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
 
         ResponseEntity<List<MinuteCandleDto>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
         return result.getBody();
+    }
+
+    @Override
+    public List<MinuteCandleDto> getMinuteCandlesDtoBetweenDate(MinuteType minuteType, MarketType marketType, LocalDateTime startTime, LocalDateTime endTime) {
+        LocalDateTime currentTime = endTime;
+        List<MinuteCandleDto> minuteCandleDtoList = new ArrayList<>();
+
+        while (checkStartTime(startTime, currentTime)) {
+            minuteCandleDtoList.addAll(getMinuteCandlesDto(minuteType, marketType, MAX_REQUEST, currentTime));
+            currentTime = currentTime.minusMinutes(5 * MAX_REQUEST);
+            threadSleep(SLEEP_TIME);
+        }
+        int between = (int)ChronoUnit.MINUTES.between(startTime, currentTime);
+        if (between != 0 && between > 0) {
+            minuteCandleDtoList.addAll(getMinuteCandlesDto(minuteType, marketType, between / 5, currentTime));
+        }
+        return minuteCandleDtoList;
+    }
+
+    private boolean checkStartTime(LocalDateTime startTime, LocalDateTime currentTime) {
+        long between = ChronoUnit.MINUTES.between(startTime, currentTime);
+
+        if (!startTime.isBefore(currentTime)) {
+            return false;
+        } else if (between <= MAX_REQUEST * FIVE_MIN) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    private void threadSleep(int mills) {
+        try {
+            Thread.sleep(mills);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private URI getMinuteCandlesUrl(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
