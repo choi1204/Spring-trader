@@ -1,4 +1,4 @@
-mode: crawel
+mode: crawl
 
 spring:
   datasource:

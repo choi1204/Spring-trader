@@ -35,9 +35,15 @@ public class MainRunner implements ApplicationRunner {
 
         try {
             switch (modeType) {
-                case REAL: realRunner.run();
-                case TEST: testRunner.run();
-                case CRAWL: crawlerRunner.run();
+                case REAL:
+                    realRunner.run();
+                    break;
+                case TEST:
+                    testRunner.run();
+                    break;
+                case CRAWL:
+                    crawlerRunner.run();
+                    break;
             }
         } catch (Exception e) {
             log.error("application.yaml 파일에서 mode를 확인해주세요.");

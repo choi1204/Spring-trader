@@ -42,7 +42,6 @@ class UpbitCandleClientImplTest {
     void _1() {
         List<MinuteCandleDto> minuteCandleDtoList = upbitCandleClient.getMinuteCandlesDto(MinuteType.FIVE, MarketType.KRW_BTC, 200, LocalDateTime.of(2022, 05, 01,0,0));
         assertThat(minuteCandleDtoList.size()).isEqualTo(200);
-
     }
 
     @Test
@@ -59,6 +58,7 @@ class UpbitCandleClientImplTest {
         }
         System.out.println(currentTime);
     }
+
     @Test
     @DisplayName("2022년 5월 1일 0시 0분 부터 2022년 5월 31일 23시 59분까지 데이터를 저장할 수 있다.")
     void _2() {

@@ -37,7 +37,6 @@ public class MinuteCandle {
 
     private Long timestamp;
 
-
     public MinuteCandle(MarketType marketType, Double openingPrice, Double highPrice, Double lowPrice, Double tradePrice, Double candleAccTradePrice, Double candleAccTradeVolume, LocalDateTime candleDateTimeUtc, LocalDateTime candleDateTimeKst, Long timestamp) {
         this.marketType = marketType;
         this.openingPrice = openingPrice;
