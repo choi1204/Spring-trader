@@ -58,19 +58,22 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
     public List<MinuteCandleDto> getMinuteCandlesDtoBetweenDate(MinuteType minuteType, MarketType marketType, LocalDateTime startTime, LocalDateTime endTime) {
         LocalDateTime currentTime = endTime;
         List<MinuteCandleDto> minuteCandleDtoList = new ArrayList<>();
+        int requestCount = MAX_REQUEST;
 
         while (checkStartTime(startTime, currentTime)) {
-            minuteCandleDtoList.addAll(getMinuteCandlesDto(minuteType, marketType, MAX_REQUEST, currentTime));
             currentTime = currentTime.minusMinutes(5 * MAX_REQUEST);
+            requestCount = getRequestCount(startTime, currentTime);
+            minuteCandleDtoList.addAll(getMinuteCandlesDto(minuteType, marketType, requestCount, currentTime));
             threadSleep(SLEEP_TIME);
         }
 
-        int between = (int)ChronoUnit.MINUTES.between(startTime, currentTime);
-        if (between != 0 && between > 0) {
-            minuteCandleDtoList.addAll(getMinuteCandlesDto(minuteType, marketType, between / 5, currentTime));
-        }
-
         return minuteCandleDtoList;
+    }
+
+    private int getRequestCount(LocalDateTime startTime,LocalDateTime currentTime) {
+        int count = (int)ChronoUnit.MINUTES.between(startTime, currentTime) / FIVE_MIN;
+
+        return count < MAX_REQUEST ? count : MAX_REQUEST
     }
 
     private boolean checkStartTime(LocalDateTime startTime, LocalDateTime currentTime) {
