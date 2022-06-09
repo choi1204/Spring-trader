@@ -1,4 +1,4 @@
-package com.example.springtrader.crawler;
+package com.example.springtrader.crawl;
 
 import org.springframework.stereotype.Component;
 

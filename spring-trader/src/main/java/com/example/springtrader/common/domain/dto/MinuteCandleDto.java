@@ -1,7 +1,7 @@
-package com.example.springtrader.crawler.domain.dto;
+package com.example.springtrader.common.domain.dto;
 
-import com.example.springtrader.crawler.domain.entity.MinuteCandle;
-import com.example.springtrader.common.enums.MarketType;
+import com.example.springtrader.common.domain.entity.MinuteCandle;
+import com.example.springtrader.common.enums.CurrencyType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,7 +45,7 @@ public class MinuteCandleDto {
 
     public MinuteCandle toMinuteCandle() {
         return new MinuteCandle(
-                MarketType.find(market), openingPrice, highPrice, lowPrice, tradePrice, candleAccTradePrice,
+                CurrencyType.findMarket(market), openingPrice, highPrice, lowPrice, tradePrice, candleAccTradePrice,
                 candleAccTradeVolume, candleDateTimeUtc, candleDateTimeKst, timestamp
         );
     }

@@ -1,8 +1,8 @@
-package com.example.springtrader.crawler.service;
+package com.example.springtrader.common.service;
 
-import com.example.springtrader.crawler.domain.dto.MinuteCandleDto;
-import com.example.springtrader.crawler.domain.entity.MinuteCandle;
-import com.example.springtrader.crawler.repository.MinuteCandleRepository;
+import com.example.springtrader.common.domain.dto.MinuteCandleDto;
+import com.example.springtrader.common.domain.entity.MinuteCandle;
+import com.example.springtrader.common.repository.MinuteCandleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +27,11 @@ public class MinuteCandleServiceImpl implements MinuteCandleService {
     public void saveAll(List<MinuteCandleDto>minuteCandleDtoList) {
         List<MinuteCandle> minuteCandleList = minuteCandleDtoList.stream().map(dto -> dto.toMinuteCandle()).collect(Collectors.toList());
         minuteCandleRepository.saveAll(minuteCandleList);
+    }
+
+    @Override
+    public List<MinuteCandle> findAll() {
+        return minuteCandleRepository.findAll();
     }
 
 }

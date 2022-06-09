@@ -1,7 +1,8 @@
 package com.example.springtrader.common.client;
 
-import com.example.springtrader.crawler.domain.dto.MinuteCandleDto;
-import com.example.springtrader.common.enums.MarketType;
+import com.example.springtrader.common.domain.dto.CoinWalletDto;
+import com.example.springtrader.common.domain.dto.MinuteCandleDto;
+import com.example.springtrader.common.enums.CurrencyType;
 import com.trader.common.enums.MinuteType;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface UpbitCandleClient {
 
-    List<MinuteCandleDto> getMinuteCandlesDto(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime);
+    List<MinuteCandleDto> getMinuteCandlesDto(MinuteType minuteType, CurrencyType currencyType, int count, LocalDateTime localDateTime);
 
-    List<MinuteCandleDto> getMinuteCandlesDtoBetweenDate(MinuteType minuteType, MarketType marketType, LocalDateTime startTime, LocalDateTime endTime);
+    List<CoinWalletDto> getCoinWalletDto();
 }

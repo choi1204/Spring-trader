@@ -1,10 +1,11 @@
 package com.example.springtrader.common.client;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import com.example.springtrader.common.domain.dto.CoinWalletDto;
 import com.example.springtrader.common.properties.UpbitProperties;
-import com.example.springtrader.crawler.domain.dto.MinuteCandleDto;
-import com.example.springtrader.common.enums.MarketType;
+import com.example.springtrader.common.domain.dto.MinuteCandleDto;
+import com.example.springtrader.common.enums.CurrencyType;
+import com.example.springtrader.common.util.JwtTokenUtil;
+import com.example.springtrader.common.util.UrlUtil;
 import com.trader.common.enums.MinuteType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,16 +16,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,91 +30,29 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
 
     private final UpbitProperties upbitProperties;
 
-    private final int MAX_REQUEST = 200;
-
-    private final int FIVE_MIN = 5;
-
-    private final int SLEEP_TIME = 80;
-
-
     @Override
-    public List<MinuteCandleDto> getMinuteCandlesDto(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
+    public List<MinuteCandleDto> getMinuteCandlesDto(MinuteType minuteType, CurrencyType currencyType, int count, LocalDateTime localDateTime) {
+        URI targetUrl = UrlUtil.getMinuteCandlesUrl(minuteType, currencyType, count, localDateTime, upbitProperties.getServerUrl());
+        ResponseEntity<List<MinuteCandleDto>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
 
-        HttpHeaders authorizationHeader = getAuthorizationHeader(getJwtToken());
-        HttpEntity<String> httpEntity = new HttpEntity<>(authorizationHeader);
-
-        URI targetUrl = getMinuteCandlesUrl(minuteType, marketType, count, localDateTime);
-
-        ResponseEntity<List<MinuteCandleDto>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
         return result.getBody();
     }
 
     @Override
-    public List<MinuteCandleDto> getMinuteCandlesDtoBetweenDate(MinuteType minuteType, MarketType marketType, LocalDateTime startTime, LocalDateTime endTime) {
-        LocalDateTime currentTime = endTime.minusMinutes(FIVE_MIN);
-        List<MinuteCandleDto> minuteCandleDtoList = new ArrayList<>();
+    public List<CoinWalletDto> getCoinWalletDto() {
+        HttpHeaders authorizationHeader = JwtTokenUtil.getAuthorizationHeader(upbitProperties.getSecretKey(), upbitProperties.getAccessKey());
+        HttpEntity<String> httpEntity = new HttpEntity(authorizationHeader);
+        URI targetUrl = UrlUtil.getAccountUrl(upbitProperties.getServerUrl());
+        ResponseEntity<List<CoinWalletDto>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
 
-        while (checkStartTime(startTime, currentTime)) {
-            int requestCount = getRequestCount(startTime, currentTime);
-            minuteCandleDtoList.addAll(getMinuteCandlesDto(minuteType, marketType, requestCount, currentTime));
-            currentTime = minuteCandleDtoList.get(minuteCandleDtoList.size() - 1).getCandleDateTimeUtc();
-            threadSleep(SLEEP_TIME);
-        }
-
-        return minuteCandleDtoList;
+        return result.getBody();
     }
 
-    private int getRequestCount(LocalDateTime startTime,LocalDateTime currentTime) {
-        int count = (int)ChronoUnit.MINUTES.between(startTime, currentTime) / FIVE_MIN;
 
-        return Math.min(count, MAX_REQUEST);
-    }
 
-    private boolean checkStartTime(LocalDateTime startTime, LocalDateTime currentTime) {
-        long between = ChronoUnit.MINUTES.between(startTime, currentTime);
 
-        if (!startTime.isBefore(currentTime)) {
-            return false;
-        } else if (between <= MAX_REQUEST * FIVE_MIN) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
-    private void threadSleep(int mills) {
-        try {
-            Thread.sleep(mills);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private URI getMinuteCandlesUrl(MinuteType minuteType, MarketType marketType, int count, LocalDateTime localDateTime) {
-        return UriComponentsBuilder
-                .fromUriString(upbitProperties.getServerUrl())
-                .path("/v1/candles/minutes/{unit}")
-                .queryParam("market", marketType.getType())
-                .queryParam("to", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(localDateTime))
-                .queryParam("count", count)
-                .encode(StandardCharsets.UTF_8)
-                .buildAndExpand(minuteType.getMinute())
-                .toUri();
-    }
 
-    private String getJwtToken() {
-        Algorithm algorithm = Algorithm.HMAC256(upbitProperties.getSecretKey());
 
-        return JWT.create()
-                .withClaim("access_key", upbitProperties.getAccessKey())
-                .withClaim("nonce", UUID.randomUUID().toString())
-                .sign(algorithm);
-    }
-
-    private HttpHeaders getAuthorizationHeader(String jwtToken) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", "Bearer " + jwtToken);
-        httpHeaders.add("Accept", "application/json");
-        return httpHeaders;
-    }
 }

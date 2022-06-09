@@ -1,6 +1,7 @@
-package com.example.springtrader.crawler.domain.entity;
+package com.example.springtrader.common.domain.entity;
 
-import com.example.springtrader.common.enums.MarketType;
+import com.example.springtrader.common.enums.CurrencyType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,13 +12,14 @@ import java.time.LocalDateTime;
 @Table
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MinuteCandle {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private MarketType marketType;
+    private CurrencyType currencyType;
 
     private Double openingPrice;
 
@@ -37,8 +39,8 @@ public class MinuteCandle {
 
     private Long timestamp;
 
-    public MinuteCandle(MarketType marketType, Double openingPrice, Double highPrice, Double lowPrice, Double tradePrice, Double candleAccTradePrice, Double candleAccTradeVolume, LocalDateTime candleDateTimeUtc, LocalDateTime candleDateTimeKst, Long timestamp) {
-        this.marketType = marketType;
+    public MinuteCandle(CurrencyType currencyType, Double openingPrice, Double highPrice, Double lowPrice, Double tradePrice, Double candleAccTradePrice, Double candleAccTradeVolume, LocalDateTime candleDateTimeUtc, LocalDateTime candleDateTimeKst, Long timestamp) {
+        this.currencyType = currencyType;
         this.openingPrice = openingPrice;
         this.highPrice = highPrice;
         this.lowPrice = lowPrice;

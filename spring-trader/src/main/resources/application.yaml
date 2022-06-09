@@ -1,4 +1,5 @@
-mode: crawl
+application:
+  mode: crawl
 
 spring:
   datasource:
