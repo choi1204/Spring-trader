@@ -1,6 +1,6 @@
 package com.example.springtrader.common.client;
 
-import com.example.springtrader.common.domain.dto.CoinWalletDto;
+import com.example.springtrader.common.domain.dto.UpbitCoinWalle;
 import com.example.springtrader.common.properties.UpbitProperties;
 import com.example.springtrader.common.domain.dto.MinuteCandleDto;
 import com.example.springtrader.common.enums.CurrencyType;
@@ -39,11 +39,11 @@ public class UpbitCandleClientImpl implements UpbitCandleClient {
     }
 
     @Override
-    public List<CoinWalletDto> getCoinWalletDto() {
+    public List<UpbitCoinWalle> getCoinWalletDto() {
         HttpHeaders authorizationHeader = JwtTokenUtil.getAuthorizationHeader(upbitProperties.getSecretKey(), upbitProperties.getAccessKey());
         HttpEntity<String> httpEntity = new HttpEntity(authorizationHeader);
         URI targetUrl = UrlUtil.getAccountUrl(upbitProperties.getServerUrl());
-        ResponseEntity<List<CoinWalletDto>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
+        ResponseEntity<List<UpbitCoinWalle>> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<>() {});
 
         return result.getBody();
     }

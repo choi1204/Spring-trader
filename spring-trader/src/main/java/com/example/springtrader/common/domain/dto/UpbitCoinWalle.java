@@ -7,12 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Currency;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CoinWalletDto {
+public class UpbitCoinWalle {
 
     private String currency;
 
