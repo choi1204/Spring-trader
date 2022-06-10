@@ -2,11 +2,14 @@ package com.example.springtrader.common.service;
 
 import com.example.springtrader.common.domain.dto.MinuteCandleDto;
 import com.example.springtrader.common.domain.entity.MinuteCandle;
+import com.example.springtrader.common.enums.CurrencyType;
 import com.example.springtrader.common.repository.MinuteCandleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,8 +33,14 @@ public class MinuteCandleServiceImpl implements MinuteCandleService {
     }
 
     @Override
+    public List<MinuteCandle> getMinuteCandleByUtc(CurrencyType currencyType, LocalDateTime startTime, LocalDateTime endTime) {
+        return minuteCandleRepository.findByCurrencyTypeAndCandleDateTimeUtcBetween(currencyType, startTime, endTime);
+    }
+
+    @Override
     public List<MinuteCandle> findAll() {
         return minuteCandleRepository.findAll();
     }
+
 
 }
