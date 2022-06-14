@@ -1,12 +1,13 @@
 package com.example.springtrader.common.enums;
 
+import com.example.springtrader.common.util.EnumFindable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
 public enum CurrencyType implements EnumFindable {
-    KRW("KRW"), BTC("BTC"), DOGE("DOGE"), BTT("BTT");
+    KRW("KRW"), BTC("BTC"), DOGE("DOGE"), BTT("BTT"), XRP("XRP");
 
     private final String type;
 
