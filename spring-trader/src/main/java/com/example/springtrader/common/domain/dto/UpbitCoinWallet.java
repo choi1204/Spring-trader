@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpbitCoinWalle {
+public class UpbitCoinWallet {
 
     private String currency;
 

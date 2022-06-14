@@ -1,7 +1,7 @@
 package com.example.springtrader.client;
 
 import com.example.springtrader.common.client.UpbitCandleClient;
-import com.example.springtrader.common.domain.dto.UpbitCoinWalle;
+import com.example.springtrader.common.domain.dto.UpbitCoinWallet;
 import com.example.springtrader.common.properties.ModeProperties;
 import com.example.springtrader.common.properties.UpbitProperties;
 import com.example.springtrader.common.domain.dto.MinuteCandleDto;
@@ -48,8 +48,8 @@ class UpbitCandleClientImplTest {
     @Test
     @DisplayName("upbit 계좌 정보를 가져올 수 있다.")
     void _2() {
-        List<UpbitCoinWalle> upbitCoinWalle = upbitCandleClient.getCoinWalletDto();
-        assertThat(upbitCoinWalle.get(0).getCurrency()).isEqualTo("KRW");
+        List<UpbitCoinWallet> upbitCoinWallet = upbitCandleClient.getCoinWalletDto();
+        assertThat(upbitCoinWallet.get(0).getCurrency()).isEqualTo("KRW");
     }
 
 

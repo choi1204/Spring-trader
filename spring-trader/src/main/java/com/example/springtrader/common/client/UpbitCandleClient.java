@@ -1,6 +1,6 @@
 package com.example.springtrader.common.client;
 
-import com.example.springtrader.common.domain.dto.UpbitCoinWalle;
+import com.example.springtrader.common.domain.dto.UpbitCoinWallet;
 import com.example.springtrader.common.domain.dto.MinuteCandleDto;
 import com.example.springtrader.common.enums.CurrencyType;
 import com.trader.common.enums.MinuteType;
@@ -12,5 +12,5 @@ public interface UpbitCandleClient {
 
     List<MinuteCandleDto> getMinuteCandlesDto(MinuteType minuteType, CurrencyType currencyType, int count, LocalDateTime localDateTime);
 
-    List<UpbitCoinWalle> getCoinWalletDto();
+    List<UpbitCoinWallet> getCoinWalletDto();
 }
