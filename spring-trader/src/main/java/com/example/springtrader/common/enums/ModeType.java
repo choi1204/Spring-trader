@@ -1,5 +1,6 @@
 package com.example.springtrader.common.enums;
 
+import com.example.springtrader.common.util.EnumFindable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

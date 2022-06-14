@@ -1,4 +1,4 @@
-package com.example.springtrader.common.enums;
+package com.example.springtrader.common.util;
 
 import java.util.Arrays;
 
