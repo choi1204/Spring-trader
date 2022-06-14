@@ -33,9 +33,20 @@ public class MinuteCandleServiceImpl implements MinuteCandleService {
     }
 
     @Override
-    public List<MinuteCandle> getMinuteCandleByUtc(CurrencyType currencyType, LocalDateTime startTime, LocalDateTime endTime) {
+    public List<MinuteCandle> getMinuteCandleByUtcBetweenDate(CurrencyType currencyType, LocalDateTime startTime, LocalDateTime endTime) {
         return minuteCandleRepository.findByCurrencyTypeAndCandleDateTimeUtcBetween(currencyType, startTime, endTime);
     }
+
+    @Override
+    public List<MinuteCandle> getMinuteCandleByUtcBeforeTime(CurrencyType currencyType, LocalDateTime targetTime) {
+        return minuteCandleRepository.findByCurrencyTypeAndCandleDateTimeUtcBefore(currencyType, targetTime);
+    }
+
+    @Override
+    public MinuteCandle getMinuteCandleByUtc(CurrencyType currencyType, LocalDateTime utcTime) {
+        return minuteCandleRepository.findByCurrencyTypeAndCandleDateTimeUtc(currencyType, utcTime);
+    }
+
 
     @Override
     public List<MinuteCandle> findAll() {

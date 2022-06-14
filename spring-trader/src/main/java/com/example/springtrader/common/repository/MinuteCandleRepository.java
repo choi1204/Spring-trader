@@ -9,4 +9,8 @@ import java.util.List;
 
 public interface MinuteCandleRepository extends JpaRepository<MinuteCandle, Long> {
     List<MinuteCandle> findByCurrencyTypeAndCandleDateTimeUtcBetween(CurrencyType currencyType, LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+    List<MinuteCandle> findByCurrencyTypeAndCandleDateTimeUtcBefore(CurrencyType currencyType, LocalDateTime targetTime);
+
+    MinuteCandle findByCurrencyTypeAndCandleDateTimeUtc(CurrencyType currencyType, LocalDateTime utcTime);
 }
